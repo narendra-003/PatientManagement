@@ -24,6 +24,24 @@ services:
     ports:
       - "5001:5432"
 
+  auth-service:
+    image: auth-service
+    container_name: auth-service
+    ports:
+      - "4005:4005"
+    depends_on:
+      - auth-service-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://auth-service-db:5432/db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: true
+      SPRING_SQL_INIT_MODE: always
+      JWT_SECRET: 0c62c7f81696112155107220940ceade1933c148add96dd448b11f1a15162223 # jwt secret key
+    networks:
+      - patient-management-network
+
   patient-service-db:
     image: postgres:latest
     container_name: patient-service-db
