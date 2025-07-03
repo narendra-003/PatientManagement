@@ -10,6 +10,20 @@ services:
     networks:
       - patient-management-network
 
+  auth-service-db:
+    image: postgres:latest
+    container_name: auth-service-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: db
+    volumes:
+      - C:\Users\dhruv\db_volumes\auth-service-db:/var/lib/postgresql/data
+    networks:
+      - patient-management-network
+    ports:
+      - "5001:5432"
+
   patient-service-db:
     image: postgres:latest
     container_name: patient-service-db
